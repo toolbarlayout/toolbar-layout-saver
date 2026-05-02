@@ -14,17 +14,8 @@ Extension SketchUp pour sauvegarder et restaurer les dispositions de toolbars.
 View → Toolbar Layout
   ├── Sauvegarder la disposition
   └── Restaurer la disposition
-```
-
-## Toolbars supportées
-
-- Lattice Maker
-- Pipe Along Path
-- Cycle Selection
-- Field of View
+``
 
 ## Version
 
 1.0.0
-
-Basé sur le code original de Ariel
