@@ -23,20 +23,44 @@
             overflow-x: hidden;
             width: 100%;
             max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+        * {
+            box-sizing: border-box;
         }
         .container {
             max-width: 100%;
             padding-left: 1rem;
             padding-right: 1rem;
+            margin-left: auto;
+            margin-right: auto;
         }
         @media (max-width: 768px) {
             .container {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
             }
             iframe {
                 max-width: 100%;
                 height: 250px;
+            }
+            body {
+                font-size: 14px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+            h3 {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -74,9 +98,6 @@
                 <a href="https://buymeacoffee.com/toolbarlayout" target="_blank" class="bg-yellow-400 text-purple-600 px-6 py-3 rounded-lg hover:bg-yellow-300 transition font-semibold">
                     <i class="fas fa-coffee mr-2"></i>Buy me a Coffee
                 </a>
-                <button class="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition font-semibold">
-                    <i class="fab fa-bitcoin mr-2"></i>Donate with Crypto
-                </button>
             </div>
             <p class="text-sm opacity-75">Your support keeps this extension free for everyone!</p>
         </div>
