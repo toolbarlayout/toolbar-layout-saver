@@ -1,30 +1,75 @@
-# Toolbar Layout Saver
+# Toolbar Layout Website
 
-Extension SketchUp pour sauvegarder et restaurer les dispositions de toolbars.
+A modern, responsive website for the Toolbar Layout SketchUp extension.
 
-## Installation
+## Features
 
-1. Copier `toolbarLayoutSaver.rb` dans le dossier Plugins de SketchUp
-2. Redémarrer SketchUp
+- **Responsive Design**: Works on all devices
+- **Contact Form**: Integrated email contact functionality
+- **Donation System**: Multiple payment options
+- **Modern UI**: Built with Tailwind CSS
+- **Smooth Animations**: Hover effects and transitions
 
-## Utilisation
+## Email Address
 
-### Menu
+**Professional Email**: `support@toolbarlayout.com`
+
+This email is used for:
+- User support and questions
+- Bug reports and feedback
+- Business inquiries
+- Partnership opportunities
+
+## Website Structure
+
 ```
-View → Toolbar Layout
-  ├── Sauvegarder la disposition
-  └── Restaurer la disposition
+website/
+├── index.html          ← Main website file
+└── README.md           ← This documentation
 ```
 
-## Toolbars supportées
+## Key Sections
 
-- Lattice Maker
-- Pipe Along Path
-- Cycle Selection
-- Field of View
+1. **Hero Section**: Eye-catching introduction with download buttons
+2. **Features**: Key benefits and functionality
+3. **Supported Toolbars**: Shows compatible extensions
+4. **Download**: Direct download section
+5. **Contact**: Form to send emails directly
+6. **Support**: Donation options for project support
 
-## Version
+## Contact Form Features
 
-1.0.0
+- **Auto-fill**: Opens user's email client with pre-filled message
+- **Professional Email**: Uses `support@toolbarlayout.com`
+- **User Information**: Captures name, email, and message
+- **Validation**: Form validation for required fields
 
-Basé sur le code original de Ariel
+## Donation Options
+
+- **PayPal**: Traditional payment method
+- **Buy Me a Coffee**: Popular platform for creators
+- **Crypto**: Modern cryptocurrency donations
+
+## Usage
+
+1. Open `index.html` in any web browser
+2. Navigate through sections using the navigation menu
+3. Fill out contact form to send emails
+4. Use donation buttons to support the project
+
+## Customization
+
+- Update colors and branding in the CSS section
+- Modify email address in the JavaScript section
+- Add new sections as needed
+- Customize donation links and payment methods
+
+## Deployment
+
+The website is ready to deploy on:
+- GitHub Pages
+- Netlify
+- Vercel
+- Any static hosting service
+
+Simply upload the `index.html` file and it will work immediately.
