@@ -1,6 +1,6 @@
 module ToolbarLayoutSaver
   
-  # Sauvegarde la position et visibilité des toolbars personnalisées
+  # Saves the position and visibility of custom toolbars
   def self.save_layout
     toolbars = ["Lattice Maker", "Pipe Along Path", "Cycle Selection", "Field of View"]
     layout = {}
@@ -19,17 +19,17 @@ module ToolbarLayoutSaver
       end
     end
     
-    # Sauvegarde dans les préférences SketchUp
+    # Save to SketchUp preferences
     layout.each do |name, data|
       data.each do |key, value|
         Sketchup.write_default('ToolbarLayout', "#{name}_#{key}", value.to_s)
       end
     end
     
-    UI.messagebox("Disposition des toolbars sauvegardée !", MB_OK, "Toolbar Layout Saver")
+    UI.messagebox("Toolbar layout saved!", MB_OK, "Toolbar Layout Saver")
   end
   
-  # Restaure la disposition sauvegardée
+  # Restores the saved layout
   def self.restore_layout
     toolbars = ["Lattice Maker", "Pipe Along Path", "Cycle Selection", "Field of View"]
     
@@ -49,15 +49,15 @@ module ToolbarLayoutSaver
       end
     end
     
-    UI.messagebox("Disposition des toolbars restaurée !", MB_OK, "Toolbar Layout Saver")
+    UI.messagebox("Toolbar layout restored!", MB_OK, "Toolbar Layout Saver")
   end
   
-  # Crée un menu pour accéder facilement aux fonctions
+  # Creates a menu for easy access to functions
   def self.create_menu
     menu = UI.menu("View")
     submenu = menu.add_submenu("Toolbar Layout")
-    submenu.add_item("Sauvegarder la disposition") { save_layout }
-    submenu.add_item("Restaurer la disposition") { restore_layout }
+    submenu.add_item("Save Layout") { save_layout }
+    submenu.add_item("Restore Layout") { restore_layout }
   end
   
   create_menu
