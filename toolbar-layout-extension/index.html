@@ -6,209 +6,611 @@
 <title>Toolbar Layout — SketchUp Extension</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0F172A;
-  --surface: #1E293B;
-  --surface2: #243148;
-  --border: #334155;
-  --accent: #22C55E;
-  --accent-dim: rgba(34,197,94,0.1);
-  --blue: #3B82F6;
-  --purple: #8B5CF6;
-  --text: #F8FAFC;
-  --muted: #94A3B8;
-  --dim: #64748B;
-  --r: 16px;
-  --r-sm: 10px;
+/* ─── TOKENS ─── */
+:root{
+  --bg:#050509;
+  --s1:#0b0c14;
+  --s2:#111320;
+  --border:rgba(255,255,255,.07);
+  --border-h:rgba(0,255,163,.35);
+  --accent:#00ffa3;
+  --accent2:#7c3aed;
+  --accent3:#2563eb;
+  --text:#f1f5f9;
+  --muted:#64748b;
+  --muted2:#94a3b8;
+  --r:18px;
+  --r-sm:12px;
+  --ease:cubic-bezier(.16,1,.3,1);
 }
+
+/* ─── RESET ─── */
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
-
-/* NAV */
-/* TOP DONATE BAR */
-.top-bar{position:fixed;top:0;left:0;right:0;z-index:1001;background:rgba(15,23,42,.95);border-bottom:1px solid rgba(51,65,85,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:8px 24px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.top-bar-text{font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap}
-.top-bar-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
-.top-bar-btn.pp{background:rgba(0,112,186,.15);color:#4BA3E3;border:1px solid rgba(0,112,186,.3)}
-.top-bar-btn.pp:hover{background:rgba(0,112,186,.25);border-color:rgba(0,112,186,.5);transform:translateY(-1px)}
-.top-bar-btn.cf{background:rgba(255,213,0,.1);color:#FFD500;border:1px solid rgba(255,213,0,.3)}
-.top-bar-btn.cf:hover{background:rgba(255,213,0,.2);border-color:rgba(255,213,0,.5);transform:translateY(-1px)}
-nav{position:fixed;top:37px;left:0;right:0;z-index:1000;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(15,23,42,.85);border-bottom:1px solid rgba(51,65,85,.5)}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.nav-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#16A34A);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.nav-logo-text{font-size:15px;font-weight:600;letter-spacing:-.3px}
-.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .15s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{background:var(--accent)!important;color:#000!important;padding:8px 20px!important;border-radius:8px;font-weight:600!important;transition:all .2s!important}
-.nav-cta:hover{background:#16A34A!important;box-shadow:0 4px 20px rgba(34,197,94,.4)!important;transform:translateY(-1px)}
-
-/* HERO */
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:157px 24px 80px;overflow:hidden}
-.hero-glow{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(34,197,94,.1) 0%,transparent 70%);pointer-events:none}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid rgba(34,197,94,.3);border-radius:100px;background:rgba(34,197,94,.06);font-size:13px;font-weight:500;color:var(--accent);margin-bottom:32px;animation:fadeUp .6s ease both}
-.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.hero h1{font-size:clamp(48px,8vw,92px);font-weight:800;letter-spacing:-4px;line-height:1.04;margin-bottom:24px;animation:fadeUp .6s ease .1s both}
-.g{background:linear-gradient(135deg,#F8FAFC 30%,#22C55E 70%,#16A34A 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:clamp(16px,2.5vw,20px);color:var(--muted);max-width:540px;margin:0 auto 48px;font-weight:400;line-height:1.75;animation:fadeUp .6s ease .2s both}
-.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .6s ease .3s both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* BUTTONS */
-.btn-p{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--accent);color:#000;font-weight:600;font-size:15px;border-radius:var(--r-sm);text-decoration:none;transition:all .2s;cursor:pointer;border:none;font-family:'Inter',sans-serif}
-.btn-p:hover{background:#16A34A;transform:translateY(-2px);box-shadow:0 8px 30px rgba(34,197,94,.4)}
-.btn-s{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:transparent;color:var(--text);font-weight:500;font-size:15px;border-radius:var(--r-sm);text-decoration:none;border:1px solid var(--border);transition:all .2s;cursor:pointer;font-family:'Inter',sans-serif}
-.btn-s:hover{border-color:var(--muted);background:rgba(248,250,252,.05);transform:translateY(-2px)}
-
-/* WARNING */
-.warn{position:relative;z-index:1;max-width:760px;margin:0 auto 80px;padding:0 24px}
-.warn-inner{background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.3);border-radius:var(--r);padding:20px 24px;display:flex;align-items:flex-start;gap:14px}
-.warn-icon{color:#EAB308;flex-shrink:0;margin-top:2px}
-.warn-text{font-size:14px;line-height:1.65;color:var(--muted)}
-.warn-text strong{color:#EAB308;font-weight:600}
-
-/* SECTIONS */
-section{position:relative;z-index:1;padding:80px 24px;max-width:1200px;margin:0 auto}
-.s-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-.s-title{font-size:clamp(32px,5vw,54px);font-weight:700;letter-spacing:-2.5px;line-height:1.08;margin-bottom:16px}
-.s-sub{font-size:17px;color:var(--muted);max-width:460px;line-height:1.75}
-
-/* BENTO */
-.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:210px;gap:16px;margin-top:56px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:32px;overflow:hidden;position:relative;transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
-.card:hover{transform:translateY(-4px);border-color:rgba(34,197,94,.35);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(34,197,94,.08)}
-.card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(34,197,94,.07) 0%,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
-.card:hover::before{opacity:1}
-.c-wide{grid-column:span 8}
-.c-narrow{grid-column:span 4}
-.c-half{grid-column:span 6}
-.c-tall{grid-column:span 4;grid-row:span 2}
-.c-third{grid-column:span 4}
-.bento-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;flex-shrink:0}
-.ig{background:rgba(34,197,94,.12);color:var(--accent)}
-.ib{background:rgba(59,130,246,.12);color:var(--blue)}
-.ip{background:rgba(139,92,246,.12);color:var(--purple)}
-.io{background:rgba(249,115,22,.12);color:#F97316}
-.ik{background:rgba(236,72,153,.12);color:#EC4899}
-.card h3{font-size:19px;font-weight:600;letter-spacing:-.4px;margin-bottom:10px}
-.card p{font-size:14px;color:var(--muted);line-height:1.65}
-.stat-n{font-size:76px;font-weight:800;letter-spacing:-5px;line-height:1;background:linear-gradient(135deg,var(--text) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-.stat-l{font-size:15px;color:var(--muted);font-weight:500}
-.c-stat{display:flex;flex-direction:column;justify-content:flex-end}
-.langs{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-.lp{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:500;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
-
-/* STEPS */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;position:relative}
-.steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--border),var(--border),var(--border),transparent)}
-.step{text-align:center;padding:0 20px;position:relative}
-.step-n{width:56px;height:56px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:var(--accent);margin:0 auto 20px;position:relative;z-index:1;transition:all .3s}
-.step:hover .step-n{background:var(--accent-dim);border-color:var(--accent);box-shadow:0 0 20px rgba(34,197,94,.3)}
-.step h3{font-size:15px;font-weight:600;margin-bottom:8px}
-.step p{font-size:13px;color:var(--muted);line-height:1.6}
-
-/* VIDEO */
-.video-wrap{margin-top:56px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--surface);box-shadow:0 40px 100px rgba(0,0,0,.6);position:relative}
-.video-wrap::after{content:'';position:absolute;inset:-1px;border-radius:var(--r);background:linear-gradient(135deg,rgba(34,197,94,.25),transparent 50%,rgba(59,130,246,.25));z-index:-1;pointer-events:none}
-.video-wrap iframe{width:100%;height:520px;display:block;border:none}
-.video-cap{padding:24px 32px;border-top:1px solid var(--border)}
-.video-cap h4{font-size:16px;font-weight:600;margin-bottom:6px}
-.video-cap p{font-size:14px;color:var(--muted)}
-
-/* TOOLBARS */
-.tb-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
-.tb-badge{display:flex;align-items:center;gap:8px;padding:12px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-weight:500;transition:all .2s;cursor:default}
-.tb-badge:hover{border-color:var(--accent);background:var(--accent-dim);color:var(--accent)}
-.tb-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
-
-/* SUPPORT */
-.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
-.s-card{border:1px solid var(--border);border-radius:var(--r);padding:36px;text-align:center;background:var(--surface);transition:all .3s;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:16px;color:inherit}
-.s-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.s-card.pp:hover{border-color:rgba(0,112,186,.5);box-shadow:0 20px 60px rgba(0,112,186,.2)}
-.s-card.cf:hover{border-color:rgba(255,213,0,.5);box-shadow:0 20px 60px rgba(255,213,0,.15)}
-.s-logo{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center}
-.s-card h3{font-size:18px;font-weight:600}
-.s-card p{font-size:14px;color:var(--muted);line-height:1.6}
-.s-btn{padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;display:inline-block;cursor:pointer}
-.pp-btn{background:#003087;color:#fff}
-.pp-btn:hover{background:#002676;box-shadow:0 4px 16px rgba(0,48,135,.5)}
-.cf-btn{background:#FFD500;color:#000}
-.cf-btn:hover{background:#FFC800;box-shadow:0 4px 16px rgba(255,213,0,.4)}
-
-/* CONTACT */
-.c-form{max-width:600px;margin:56px auto 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:48px}
-.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.f-g{margin-bottom:20px}
-.f-g label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:8px}
-.f-g input,.f-g textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;transition:border-color .2s,box-shadow .2s;outline:none}
-.f-g input:focus,.f-g textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,197,94,.1)}
-.f-g textarea{resize:vertical;min-height:120px}
-.f-submit{width:100%;padding:14px;background:var(--accent);color:#000;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.f-submit:hover{background:#16A34A;transform:translateY(-2px);box-shadow:0 8px 30px rgba(34,197,94,.4)}
-
-/* DOWNLOAD */
-.dl-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:48px}
-
-/* FOOTER */
-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40px 24px;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
-.f-brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
-.f-links{display:flex;gap:24px}
-.f-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .15s}
-.f-links a:hover{color:var(--text)}
-.f-copy{font-size:13px;color:var(--dim)}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(max-width:1024px){
-  .c-wide{grid-column:span 12}
-  .c-tall{grid-column:span 6;grid-row:span 2}
-  .c-narrow,.c-half,.c-third{grid-column:span 6}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
 }
-@media(max-width:768px){
-  nav{padding:14px 20px}
-  .nav-links{display:none}
-  .c-wide,.c-narrow,.c-half,.c-tall,.c-third{grid-column:span 12;grid-row:span 1}
+
+/* ─── CURSOR ─── */
+#cursor{
+  position:fixed;width:12px;height:12px;
+  background:var(--accent);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transition:transform .15s var(--ease),opacity .15s;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  position:fixed;width:40px;height:40px;
+  border:1px solid rgba(0,255,163,.4);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transition:transform .35s var(--ease),width .2s,height .2s,opacity .2s;
+}
+body:hover #cursor{opacity:1}
+
+/* ─── NOISE OVERLAY ─── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.025;pointer-events:none;z-index:1;
+}
+
+/* ─── AURORA BG ─── */
+.aurora{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.aurora-blob{
+  position:absolute;border-radius:50%;filter:blur(120px);animation:drift 18s ease-in-out infinite;
+}
+.ab1{width:800px;height:600px;top:-200px;left:-200px;background:radial-gradient(circle,rgba(124,58,237,.18) 0%,transparent 70%);animation-delay:0s}
+.ab2{width:600px;height:700px;top:20%;right:-150px;background:radial-gradient(circle,rgba(0,255,163,.1) 0%,transparent 70%);animation-delay:-6s}
+.ab3{width:700px;height:500px;bottom:-100px;left:30%;background:radial-gradient(circle,rgba(37,99,235,.12) 0%,transparent 70%);animation-delay:-12s}
+@keyframes drift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(60px,-40px) scale(1.1)}
+  66%{transform:translate(-40px,60px) scale(.95)}
+}
+
+/* ─── SCROLL PROGRESS ─── */
+#prog{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  z-index:1002;width:0%;transition:width .1s;
+}
+
+/* ─── TOP DONATE BAR ─── */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:1001;
+  background:rgba(5,5,9,.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  padding:7px 24px;
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+}
+.tb-text{font-size:12px;color:var(--muted2);font-weight:500}
+.tb-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 13px;border-radius:20px;
+  font-size:12px;font-weight:600;
+  text-decoration:none;transition:all .2s;white-space:nowrap;
+  cursor:none;
+}
+.tb-btn.pp{background:rgba(0,112,186,.15);color:#60aee0;border:1px solid rgba(0,112,186,.3)}
+.tb-btn.pp:hover{background:rgba(0,112,186,.28);box-shadow:0 0 16px rgba(0,112,186,.25)}
+.tb-btn.cf{background:rgba(255,213,0,.1);color:#ffd500;border:1px solid rgba(255,213,0,.3)}
+.tb-btn.cf:hover{background:rgba(255,213,0,.2);box-shadow:0 0 16px rgba(255,213,0,.2)}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:33px;left:0;right:0;z-index:1000;
+  padding:16px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  background:rgba(5,5,9,.75);
+  border-bottom:1px solid var(--border);
+  transition:top .3s;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+.nav-logo-icon{
+  width:30px;height:30px;
+  background:linear-gradient(135deg,var(--accent),#00c97d);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.nav-logo-text{font-size:15px;font-weight:650;letter-spacing:-.3px}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{color:var(--muted2);text-decoration:none;font-size:14px;font-weight:500;transition:color .15s;cursor:none}
+.nav-links a:hover{color:var(--text)}
+.nav-dl{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 18px;border-radius:8px;
+  background:var(--accent);color:#000;
+  font-size:13px;font-weight:700;
+  text-decoration:none;transition:all .2s;cursor:none;
+}
+.nav-dl:hover{background:#00c97d;box-shadow:0 0 24px rgba(0,255,163,.4)}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;z-index:2;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:60px;
+  padding:140px 80px 80px;
+  overflow:hidden;
+}
+.hero-left{display:flex;flex-direction:column;align-items:flex-start}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px;border-radius:20px;
+  border:1px solid rgba(0,255,163,.25);
+  background:rgba(0,255,163,.06);
+  font-size:12px;font-weight:600;color:var(--accent);
+  margin-bottom:28px;
+  opacity:0;transform:translateY(16px);
+  animation:rise .7s var(--ease) .1s forwards;
+  letter-spacing:.3px;
+}
+.badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-h1{
+  font-size:clamp(52px,5.5vw,88px);
+  font-weight:900;
+  letter-spacing:-4px;
+  line-height:1.02;
+  margin-bottom:24px;
+  opacity:0;transform:translateY(20px);
+  animation:rise .7s var(--ease) .2s forwards;
+}
+.hero-h1 .line2{display:block;color:var(--muted)}
+.grad{
+  background:linear-gradient(135deg,#fff 0%,var(--accent) 60%,#00c97d 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:18px;color:var(--muted2);
+  max-width:480px;line-height:1.75;font-weight:400;
+  margin-bottom:40px;
+  opacity:0;transform:translateY(16px);
+  animation:rise .7s var(--ease) .35s forwards;
+}
+.hero-ctas{
+  display:flex;gap:12px;flex-wrap:wrap;
+  opacity:0;transform:translateY(16px);
+  animation:rise .7s var(--ease) .45s forwards;
+}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+/* ─── BUTTONS ─── */
+.btn-p,.btn-s{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:var(--r-sm);
+  font-size:14px;font-weight:650;font-family:'Inter',sans-serif;
+  text-decoration:none;transition:all .2s var(--ease);
+  cursor:none;border:none;position:relative;overflow:hidden;
+}
+.btn-p{background:var(--accent);color:#000}
+.btn-p::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.btn-p:hover::after{opacity:1}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,255,163,.35)}
+.btn-s{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--border)}
+.btn-s:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.15);transform:translateY(-2px)}
+
+/* ─── HERO VISUAL ─── */
+.hero-right{
+  opacity:0;transform:perspective(800px) rotateY(-15deg) translateX(40px);
+  animation:heroIn .9s var(--ease) .5s forwards;
+  position:relative;
+}
+@keyframes heroIn{to{opacity:1;transform:perspective(800px) rotateY(0deg) translateX(0)}}
+.hero-window{
+  background:var(--s1);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04);
+  position:relative;
+}
+.hw-bar{
+  padding:14px 18px;
+  background:rgba(255,255,255,.03);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.hw-dot{width:11px;height:11px;border-radius:50%}
+.hw-dot.r{background:#ff5f57}.hw-dot.y{background:#febc2e}.hw-dot.g{background:#28c840}
+.hw-title{
+  margin-left:8px;font-size:12px;color:var(--muted);font-weight:500;
+}
+.hw-body{padding:24px;display:flex;flex-direction:column;gap:10px}
+.tb-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  font-size:12px;color:var(--muted2);font-weight:500;
+  transition:all .5s var(--ease);
+}
+.tb-row.active{
+  background:rgba(0,255,163,.07);
+  border-color:rgba(0,255,163,.25);
+  color:var(--accent);
+}
+.tb-icon{
+  width:22px;height:22px;border-radius:5px;
+  background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.tb-row.active .tb-icon{background:rgba(0,255,163,.15)}
+.hw-status{
+  margin-top:6px;padding:10px 14px;border-radius:10px;
+  background:rgba(0,255,163,.08);border:1px solid rgba(0,255,163,.2);
+  font-size:12px;color:var(--accent);font-weight:600;
+  display:flex;align-items:center;gap:8px;
+  opacity:0;transition:opacity .4s;
+}
+.hw-status.show{opacity:1}
+.hw-status svg{flex-shrink:0}
+.hw-cta-row{
+  display:flex;gap:8px;margin-top:4px;
+}
+.hw-btn{
+  flex:1;padding:9px;border-radius:8px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  font-size:11px;font-weight:600;color:var(--muted2);text-align:center;
+  cursor:default;transition:all .3s;
+}
+.hw-btn.save{background:rgba(0,255,163,.12);border-color:rgba(0,255,163,.3);color:var(--accent)}
+.hw-btn.save:hover{background:rgba(0,255,163,.2)}
+
+/* ─── WARNING ─── */
+.warn-wrap{position:relative;z-index:2;padding:0 80px 80px;max-width:1400px;margin:0 auto}
+.warn-box{
+  background:rgba(234,179,8,.06);
+  border:1px solid rgba(234,179,8,.25);
+  border-radius:var(--r);padding:18px 24px;
+  display:flex;align-items:flex-start;gap:14px;
+}
+.warn-box svg{color:#eab308;flex-shrink:0;margin-top:1px}
+.warn-box p{font-size:13px;line-height:1.6;color:var(--muted2)}
+.warn-box strong{color:#eab308;font-weight:600}
+
+/* ─── SECTIONS ─── */
+.section{
+  position:relative;z-index:2;
+  padding:100px 80px;max-width:1400px;margin:0 auto;
+}
+.s-label{
+  display:inline-block;font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:var(--accent);
+  margin-bottom:14px;
+}
+.s-title{
+  font-size:clamp(36px,4.5vw,60px);font-weight:800;
+  letter-spacing:-2.5px;line-height:1.06;margin-bottom:14px;
+}
+.s-sub{font-size:17px;color:var(--muted2);max-width:440px;line-height:1.75}
+
+/* ─── 3D SCROLL REVEAL ─── */
+.r3d{
+  opacity:0;
+  transform:perspective(1000px) rotateX(18deg) translateY(50px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+.r3d.visible{
+  opacity:1;
+  transform:perspective(1000px) rotateX(0) translateY(0);
+}
+.r3d-l{
+  opacity:0;
+  transform:perspective(1000px) rotateY(12deg) translateX(-50px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+.r3d-l.visible{opacity:1;transform:perspective(1000px) rotateY(0) translateX(0)}
+.r3d-r{
+  opacity:0;
+  transform:perspective(1000px) rotateY(-12deg) translateX(50px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+.r3d-r.visible{opacity:1;transform:perspective(1000px) rotateY(0) translateX(0)}
+
+/* ─── BENTO ─── */
+.bento{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:220px;
+  gap:16px;margin-top:56px;
+  perspective:1200px;
+}
+.card{
+  background:var(--s1);
+  border:1px solid var(--border);
+  border-radius:var(--r);padding:32px;
+  overflow:hidden;position:relative;
+  transition:transform .25s var(--ease),border-color .25s,box-shadow .25s;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,255,163,.06) 0%,transparent 55%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.card:hover::before{opacity:1}
+.card::after{
+  content:'';position:absolute;inset:-1px;
+  border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(0,255,163,.15),transparent 50%,rgba(124,58,237,.08));
+  opacity:0;transition:opacity .25s;pointer-events:none;z-index:-1;
+}
+.card:hover::after{opacity:1}
+.card:hover{
+  border-color:rgba(0,255,163,.25);
+  box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 40px rgba(0,255,163,.04);
+}
+.cw{grid-column:span 8}.cn{grid-column:span 4}
+.ch{grid-column:span 6}.ct{grid-column:span 4;grid-row:span 2}
+.c3{grid-column:span 4}
+.bicon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;flex-shrink:0;
+}
+.ig{background:rgba(0,255,163,.1);color:var(--accent)}
+.ib{background:rgba(37,99,235,.15);color:#60a5fa}
+.ip{background:rgba(124,58,237,.15);color:#a78bfa}
+.io{background:rgba(249,115,22,.15);color:#fb923c}
+.ik{background:rgba(236,72,153,.15);color:#f472b6}
+.card h3{font-size:19px;font-weight:650;letter-spacing:-.5px;margin-bottom:10px}
+.card p{font-size:14px;color:var(--muted2);line-height:1.65}
+.stat-n{
+  font-size:80px;font-weight:900;letter-spacing:-5px;line-height:1;
+  background:linear-gradient(135deg,#fff 0%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:8px;
+}
+.stat-l{font-size:14px;color:var(--muted2);font-weight:500;line-height:1.5}
+.cstat{display:flex;flex-direction:column;justify-content:flex-end}
+.langs{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.lp{
+  padding:3px 9px;border-radius:5px;
+  font-size:10px;font-weight:600;
+  background:var(--s2);border:1px solid var(--border);color:var(--muted2);
+}
+
+/* ─── STEPS ─── */
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;margin-top:56px;position:relative;perspective:1000px;
+}
+.steps::before{
+  content:'';position:absolute;top:27px;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);
+}
+.step{text-align:center;padding:0 18px;position:relative}
+.step-n{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--s1);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:var(--accent);
+  margin:0 auto 20px;position:relative;z-index:1;
+  transition:all .3s var(--ease);
+}
+.step:hover .step-n{
+  background:rgba(0,255,163,.1);
+  border-color:var(--accent);
+  box-shadow:0 0 24px rgba(0,255,163,.25);
+  transform:scale(1.1);
+}
+.step h3{font-size:14px;font-weight:650;margin-bottom:6px;letter-spacing:-.2px}
+.step p{font-size:13px;color:var(--muted2);line-height:1.6}
+
+/* ─── VIDEO ─── */
+.vwrap{
+  margin-top:56px;border-radius:var(--r);overflow:hidden;
+  border:1px solid var(--border);background:var(--s1);
+  box-shadow:0 40px 120px rgba(0,0,0,.7);position:relative;
+}
+.vwrap::before{
+  content:'';position:absolute;inset:-1px;border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(0,255,163,.2),transparent 40%,rgba(124,58,237,.15));
+  z-index:-1;
+}
+.vwrap iframe{width:100%;height:540px;display:block;border:none}
+.vcap{padding:22px 28px;border-top:1px solid var(--border)}
+.vcap h4{font-size:15px;font-weight:650;margin-bottom:5px}
+.vcap p{font-size:13px;color:var(--muted2)}
+
+/* ─── DOWNLOAD ─── */
+.dl-hero{
+  text-align:center;
+  padding:120px 80px;
+  position:relative;z-index:2;
+  max-width:1400px;margin:0 auto;
+}
+.dl-glow{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,255,163,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.dl-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+
+/* ─── SUPPORT ─── */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.scard{
+  border:1px solid var(--border);border-radius:var(--r);
+  padding:40px;text-align:center;background:var(--s1);
+  transition:all .3s var(--ease);
+  text-decoration:none;display:flex;flex-direction:column;
+  align-items:center;gap:18px;color:inherit;cursor:none;
+  position:relative;overflow:hidden;
+}
+.scard::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  transition:opacity .3s;
+}
+.scard.pp::before{background:radial-gradient(circle at 50% 0%,rgba(0,112,186,.1),transparent 70%)}
+.scard.cf::before{background:radial-gradient(circle at 50% 0%,rgba(255,213,0,.08),transparent 70%)}
+.scard:hover::before{opacity:1}
+.scard:hover{transform:translateY(-6px)}
+.scard.pp:hover{border-color:rgba(0,112,186,.4);box-shadow:0 24px 60px rgba(0,112,186,.15)}
+.scard.cf:hover{border-color:rgba(255,213,0,.4);box-shadow:0 24px 60px rgba(255,213,0,.1)}
+.slogo{
+  width:60px;height:60px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.scard h3{font-size:20px;font-weight:700;letter-spacing:-.3px}
+.scard p{font-size:14px;color:var(--muted2);line-height:1.65;max-width:260px}
+.sbtn{
+  padding:10px 26px;border-radius:8px;
+  font-size:14px;font-weight:650;
+  text-decoration:none;transition:all .2s;
+  display:inline-block;cursor:none;
+}
+.pp-b{background:#0070ba;color:#fff}
+.pp-b:hover{background:#005ea6;box-shadow:0 4px 20px rgba(0,112,186,.4)}
+.cf-b{background:#ffd500;color:#000}
+.cf-b:hover{background:#ffc800;box-shadow:0 4px 20px rgba(255,213,0,.35)}
+
+/* ─── CONTACT ─── */
+.cform{
+  max-width:580px;margin:56px auto 0;
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:var(--r);padding:48px;
+}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;letter-spacing:.3px;text-transform:uppercase}
+.fg input,.fg textarea{
+  width:100%;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:12px 16px;color:var(--text);
+  font-family:'Inter',sans-serif;font-size:14px;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.fg input:focus,.fg textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(0,255,163,.1);
+}
+.fg textarea{resize:vertical;min-height:120px}
+.fsub{
+  width:100%;padding:14px;background:var(--accent);color:#000;
+  border:none;border-radius:var(--r-sm);
+  font-size:14px;font-weight:700;font-family:'Inter',sans-serif;
+  cursor:none;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.fsub:hover{background:#00c97d;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,255,163,.35)}
+
+/* ─── DIVIDER LINE ─── */
+.divider{
+  position:relative;z-index:2;
+  height:1px;background:linear-gradient(90deg,transparent,var(--border) 30%,var(--border) 70%,transparent);
+  margin:0 80px;
+}
+
+/* ─── FOOTER ─── */
+footer{
+  position:relative;z-index:2;
+  border-top:1px solid var(--border);
+  padding:36px 80px;max-width:1400px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.fbrand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:14px}
+.flinks{display:flex;gap:20px}
+.flinks a{color:var(--muted);text-decoration:none;font-size:13px;transition:color .15s;cursor:none}
+.flinks a:hover{color:var(--text)}
+.fcopy{font-size:12px;color:var(--muted)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr;padding:120px 40px 60px}
+  .hero-right{display:none}
+  .section,.warn-wrap{padding-left:40px;padding-right:40px}
+  .dl-hero{padding:80px 40px}
+  footer{padding:32px 40px}
+  .divider{margin:0 40px}
+  nav{padding:16px 40px}
+}
+@media(max-width:900px){
+  .cw,.cn,.ch,.ct,.c3{grid-column:span 12;grid-row:span 1}
   .bento{grid-auto-rows:auto}
   .card{padding:24px}
   .steps{grid-template-columns:1fr 1fr;gap:32px}
   .steps::before{display:none}
-  .support-grid{grid-template-columns:1fr}
-  .video-wrap iframe{height:240px}
-  .f-row{grid-template-columns:1fr}
-  .c-form{padding:24px 20px}
+  .sgrid{grid-template-columns:1fr}
+  .vwrap iframe{height:260px}
+  .frow{grid-template-columns:1fr}
+  .cform{padding:28px 20px}
   footer{flex-direction:column;align-items:flex-start}
+  .hero-h1{letter-spacing:-3px}
+}
+@media(max-width:600px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  .section{padding:64px 20px}
+  .warn-wrap{padding:0 20px 64px}
+  .dl-hero{padding:64px 20px}
+  footer{padding:28px 20px}
+  .divider{margin:0 20px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
+  .r3d,.r3d-l,.r3d-r{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
 
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="prog"></div>
+
+<!-- AURORA -->
+<div class="aurora">
+  <div class="aurora-blob ab1"></div>
+  <div class="aurora-blob ab2"></div>
+  <div class="aurora-blob ab3"></div>
+</div>
+
+<!-- TOP DONATE BAR -->
 <div class="top-bar">
-  <span class="top-bar-text">❤️ If Toolbar Layout saves you time —</span>
-  <a href="https://www.paypal.com/ncp/payment/XP64LCUR32NYG" target="_blank" class="top-bar-btn pp">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.197 7.543zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.59 3.025-2.566 6.082-8.558 6.082H9.819c-.524 0-.968.382-1.05.9l-1.305 8.27-.361 2.286a.64.64 0 00.633.741h4.084a.641.641 0 00.633-.741l.295-1.868.454-2.88h2.19c4.298 0 7.664-1.747 8.646-6.797.344-1.764.093-3.241-.816-4.452z"/></svg>
-    Donate via PayPal
+  <span class="tb-text">If Toolbar Layout saves you time —</span>
+  <a href="https://www.paypal.com/ncp/payment/XP64LCUR32NYG" target="_blank" class="tb-btn pp">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.197 7.543zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.59 3.025-2.566 6.082-8.558 6.082H9.819c-.524 0-.968.382-1.05.9l-1.305 8.27-.361 2.286a.64.64 0 00.633.741h4.084a.641.641 0 00.633-.741l.295-1.868.454-2.88h2.19c4.298 0 7.664-1.747 8.646-6.797.344-1.764.093-3.241-.816-4.452z"/></svg>
+    PayPal
   </a>
-  <a href="https://buymeacoffee.com/toolbarlayout" target="_blank" class="top-bar-btn cf">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.864-.109-.37-.531-.552-.888-.462-.302.079-.612.141-.917.195a12.64 12.64 0 01-1.144.117c-.867.063-1.737.065-2.606.019l-.947-.049c-.447-.023-.862-.065-1.311-.105l-.324-.031c-.2-.023-.4-.047-.605-.096-.109-.026-.381-.094-.38-.224.001-.104.228-.157.33-.192.27-.095.55-.164.833-.217l.921-.167c.924-.16 1.859-.247 2.797-.3 1.056-.06 2.114-.073 3.17-.024.386.018.773.053 1.157.104.228.03.622.095.651.369.031.284-.328.338-.549.403-.228.067-.467.12-.698.163l-.144.028a1.2 1.2 0 00-.274.089c-.316.148-.473.514-.362.848.109.329.47.499.8.427 1.317-.31 2.65-.543 3.991-.64.913-.064 1.824-.05 2.738.05zM12 14c.756 0 1.453.26 2 .693V20H10v-5.307C10.547 14.26 11.244 14 12 14zm7 6H5v-2l.002-.002c.127-.055.216-.182.216-.33V16h13.364v1.297c0 .148.09.275.217.33L19 17.663V20z"/></svg>
+  <a href="https://buymeacoffee.com/toolbarlayout" target="_blank" class="tb-btn cf">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.5 3H6c-1.1 0-2 .9-2 2v1h16V5c0-1.1-.9-2-2-2zM4 7v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7H4zm8 9c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
     Buy Me a Coffee
   </a>
 </div>
-<nav>
+
+<!-- NAV -->
+<nav id="navbar">
   <a href="#" class="nav-logo">
     <div class="nav-logo-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg>
     </div>
     <span class="nav-logo-text">Toolbar Layout</span>
   </a>
@@ -218,64 +620,105 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
     <li><a href="#demo">Demo</a></li>
     <li><a href="#support">Support</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank" class="nav-cta">Download Free</a></li>
   </ul>
+  <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank" class="nav-dl">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Free Download
+  </a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-badge"><span class="badge-dot"></span>Free SketchUp Extension — v1.0.0</div>
-  <h1><span class="g">Stop losing<br>your workspace.</span></h1>
-  <p class="hero-sub">Toolbar Layout Saver keeps your SketchUp toolbars exactly where you left them. Save once, restore anytime — one click.</p>
-  <div class="hero-ctas">
-    <a href="https://extensions.sketchup.com/en/content/toolbar-layout" target="_blank" class="btn-p">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Extension Warehouse
-    </a>
-    <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank" class="btn-s">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      Download .rbz
-    </a>
-    <a href="#demo" class="btn-s">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-      Watch Demo
-    </a>
+  <div class="hero-left">
+    <div class="hero-badge"><span class="badge-dot"></span>Free SketchUp Extension · v1.0.0</div>
+    <h1 class="hero-h1">
+      <span class="grad">Never lose</span>
+      <span class="line2">your workspace</span>
+      <span class="line2">again.</span>
+    </h1>
+    <p class="hero-sub">Toolbar Layout Saver remembers exactly where every toolbar lives. Save once, restore in one click — across crashes, updates, and reinstalls.</p>
+    <div class="hero-ctas">
+      <a href="https://extensions.sketchup.com/en/content/toolbar-layout" target="_blank" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Extension Warehouse
+      </a>
+      <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank" class="btn-s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Download .rbz
+      </a>
+      <a href="#demo" class="btn-s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Watch Demo
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero Window Animation -->
+  <div class="hero-right">
+    <div class="hero-window">
+      <div class="hw-bar">
+        <div class="hw-dot r"></div><div class="hw-dot y"></div><div class="hw-dot g"></div>
+        <span class="hw-title">SketchUp — Toolbar Manager</span>
+      </div>
+      <div class="hw-body">
+        <div class="tb-row" id="tr1">
+          <div class="tb-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="4" rx="1"/></svg></div>
+          Lattice Maker
+        </div>
+        <div class="tb-row" id="tr2">
+          <div class="tb-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+          Pipe Along Path
+        </div>
+        <div class="tb-row" id="tr3">
+          <div class="tb-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></div>
+          Cycle Selection
+        </div>
+        <div class="tb-row" id="tr4">
+          <div class="tb-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg></div>
+          Field of View
+        </div>
+        <div class="hw-status" id="hw-stat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Layout saved successfully
+        </div>
+        <div class="hw-cta-row">
+          <div class="hw-btn save" id="hw-save-btn">Save Layout</div>
+          <div class="hw-btn">Restore Layout</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- WARNING -->
-<div class="warn">
-  <div class="warn-inner">
-    <div class="warn-icon">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    </div>
-    <p class="warn-text"><strong>Important:</strong> To save your layout correctly, always quit SketchUp via <strong>File → Exit SketchUp</strong>. It must be the <strong>last running instance</strong> of SketchUp.</p>
+<div class="warn-wrap">
+  <div class="warn-box r3d">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <p><strong>Important:</strong> Always quit SketchUp via <strong>File → Exit SketchUp</strong> for the layout to save correctly. It must be the <strong>last running instance</strong> of SketchUp.</p>
   </div>
 </div>
 
 <!-- FEATURES -->
-<section id="features">
-  <span class="s-label reveal">Features</span>
-  <h2 class="s-title reveal">Everything you need.<br>Nothing you don't.</h2>
-  <p class="s-sub reveal">A focused extension that does one thing perfectly.</p>
+<div class="section" id="features">
+  <span class="s-label r3d">Features</span>
+  <h2 class="s-title r3d">Everything you need.<br>Nothing you don't.</h2>
+  <p class="s-sub r3d">A laser-focused extension that does one thing perfectly.</p>
 
   <div class="bento">
-
-    <div class="card c-wide reveal">
-      <div class="bento-icon ig">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+    <div class="card cw r3d" style="transition-delay:.05s">
+      <div class="bicon ig">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
       </div>
       <h3>Save your layout in one click</h3>
-      <p>View → Toolbar Layout → Save Layout. Your entire toolbar configuration — positions, visibility, floating state — captured instantly and stored in SketchUp preferences.</p>
+      <p>View → Toolbar Layout → Save Layout. Every toolbar's position, visibility, and floating state — captured instantly, stored in SketchUp preferences, survives restarts forever.</p>
     </div>
 
-    <div class="card c-tall reveal">
-      <div class="bento-icon ib">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+    <div class="card cn ct r3d" style="transition-delay:.1s">
+      <div class="bicon ib">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
       </div>
       <h3>16 languages</h3>
-      <p>Auto-detects your SketchUp locale.</p>
+      <p>Auto-detects your locale.</p>
       <div class="langs">
         <span class="lp">EN</span><span class="lp">FR</span><span class="lp">DE</span><span class="lp">ES</span>
         <span class="lp">IT</span><span class="lp">PT</span><span class="lp">NL</span><span class="lp">PL</span>
@@ -284,212 +727,278 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
       </div>
     </div>
 
-    <div class="card c-half reveal">
-      <div class="bento-icon ip">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+    <div class="card ch r3d" style="transition-delay:.15s">
+      <div class="bicon ip">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
       </div>
       <h3>Restore instantly</h3>
-      <p>One click brings back your saved layout — every toolbar in its exact position. Survives crashes, updates, reinstalls.</p>
+      <p>One click brings back every toolbar to its exact position — after a crash, update, or fresh install.</p>
     </div>
 
-    <div class="card c-half c-stat reveal">
+    <div class="card ch cstat r3d" style="transition-delay:.2s">
       <div class="stat-n">Free</div>
-      <div class="stat-l">No subscription. No paywall.<br>Open source on GitHub.</div>
+      <div class="stat-l">No subscription.<br>No paywall. Open source<br>on GitHub — MIT license.</div>
     </div>
 
-    <div class="card c-third reveal">
-      <div class="bento-icon io">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <div class="card c3 r3d" style="transition-delay:.25s">
+      <div class="bicon io">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </div>
       <h3>SketchUp 2017+</h3>
-      <p>Compatible with all modern SketchUp versions on Mac and Windows.</p>
+      <p>Works on Mac and Windows with all modern SketchUp versions.</p>
     </div>
 
-    <div class="card c-third reveal">
-      <div class="bento-icon ik">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    <div class="card c3 r3d" style="transition-delay:.3s">
+      <div class="bicon ik">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
       </div>
       <h3>Native View menu</h3>
-      <p>Access via View → Toolbar Layout directly inside SketchUp. No extra toolbar needed.</p>
+      <p>Accessible directly from View → Toolbar Layout inside SketchUp. Zero extra toolbar needed.</p>
     </div>
 
-    <div class="card c-third reveal">
-      <div class="bento-icon ig">
+    <div class="card c3 r3d" style="transition-delay:.35s">
+      <div class="bicon ig">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       </div>
       <h3>Open source</h3>
       <p>MIT license. Full source on GitHub. Fork it, improve it, make it yours.</p>
     </div>
-
   </div>
-</section>
+</div>
 
 <!-- INSTALL -->
-<section id="install">
-  <span class="s-label reveal">Installation</span>
-  <h2 class="s-title reveal">Up and running<br>in 60 seconds.</h2>
-
+<div class="section" id="install">
+  <span class="s-label r3d">Installation</span>
+  <h2 class="s-title r3d">Up and running<br>in 60 seconds.</h2>
   <div class="steps">
-    <div class="step reveal">
+    <div class="step r3d" style="transition-delay:.0s">
       <div class="step-n">1</div>
       <h3>Download the .rbz</h3>
       <p>From GitHub or Extension Warehouse</p>
     </div>
-    <div class="step reveal">
+    <div class="step r3d" style="transition-delay:.1s">
       <div class="step-n">2</div>
       <h3>Install Extension</h3>
       <p>Extensions → Extension Manager → Install Extension</p>
     </div>
-    <div class="step reveal">
+    <div class="step r3d" style="transition-delay:.2s">
       <div class="step-n">3</div>
       <h3>Save your layout</h3>
       <p>View → Toolbar Layout → Save Layout</p>
     </div>
-    <div class="step reveal">
+    <div class="step r3d" style="transition-delay:.3s">
       <div class="step-n">4</div>
       <h3>Exit via File menu</h3>
       <p>File → Exit SketchUp (last instance)</p>
     </div>
   </div>
-</section>
-
-<!-- TOOLBARS -->
-<section>
-  <span class="s-label reveal">Compatible with</span>
-  <h2 class="s-title reveal">Supported toolbars</h2>
-  <p class="s-sub reveal">Works with these popular SketchUp extensions out of the box.</p>
-  <div class="tb-grid reveal">
-    <div class="tb-badge"><span class="tb-dot"></span>Lattice Maker</div>
-    <div class="tb-badge"><span class="tb-dot"></span>Pipe Along Path</div>
-    <div class="tb-badge"><span class="tb-dot"></span>Cycle Selection</div>
-    <div class="tb-badge"><span class="tb-dot"></span>Field of View</div>
-  </div>
-</section>
+</div>
 
 <!-- DEMO -->
-<section id="demo">
-  <span class="s-label reveal">Demo</span>
-  <h2 class="s-title reveal">See it in action.</h2>
-  <div class="video-wrap reveal">
+<div class="section" id="demo">
+  <span class="s-label r3d">Demo</span>
+  <h2 class="s-title r3d">See it in action.</h2>
+  <div class="vwrap r3d">
     <iframe src="https://www.youtube.com/embed/83U46Bmvsak?rel=0&modestbranding=1&playsinline=1&autoplay=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Toolbar Layout Saver Demo"></iframe>
-    <div class="video-cap">
+    <div class="vcap">
       <h4>Toolbar Layout Saver — Full Demo</h4>
       <p>Save and restore your entire SketchUp toolbar setup with a single click.</p>
     </div>
   </div>
-</section>
+</div>
 
 <!-- DOWNLOAD -->
-<section style="text-align:center">
-  <span class="s-label reveal">Download</span>
-  <h2 class="s-title reveal">Free. Always.</h2>
-  <p class="s-sub reveal" style="margin:0 auto">No account. No signup. Just download and install.</p>
+<div class="dl-hero">
+  <div class="dl-glow"></div>
+  <span class="s-label r3d">Download</span>
+  <h2 class="s-title r3d" style="text-align:center">Free.<br>Always.</h2>
+  <p class="s-sub r3d" style="margin:0 auto;text-align:center">No account. No signup.<br>Just download and install.</p>
   <div class="dl-btns">
-    <a href="https://extensions.sketchup.com/en/content/toolbar-layout" target="_blank" class="btn-p reveal">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <a href="https://extensions.sketchup.com/en/content/toolbar-layout" target="_blank" class="btn-p r3d" style="transition-delay:.1s">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Extension Warehouse
     </a>
-    <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank" class="btn-s reveal">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank" class="btn-s r3d" style="transition-delay:.2s">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       Download on GitHub
     </a>
   </div>
-</section>
+</div>
 
 <!-- SUPPORT -->
-<section id="support">
-  <span class="s-label reveal">Support the project</span>
-  <h2 class="s-title reveal">If it helped you,<br>consider a coffee.</h2>
-  <p class="s-sub reveal">Free and always will be. If it saves you time, any contribution keeps development going.</p>
-  <div class="support-grid">
-    <a href="https://www.paypal.com/ncp/payment/XP64LCUR32NYG" target="_blank" class="s-card pp">
-      <div class="s-logo" style="background:rgba(0,48,135,.12)">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#0070BA"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.197 7.543zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.59 3.025-2.566 6.082-8.558 6.082H9.819c-.524 0-.968.382-1.05.9l-1.305 8.27-.361 2.286a.64.64 0 00.633.741h4.084a.641.641 0 00.633-.741l.295-1.868.454-2.88h2.19c4.298 0 7.664-1.747 8.646-6.797.344-1.764.093-3.241-.816-4.452z"/></svg>
+<div class="section" id="support">
+  <span class="s-label r3d">Support the project</span>
+  <h2 class="s-title r3d">If it helped you,<br>consider a coffee.</h2>
+  <p class="s-sub r3d">Free forever. If it saves you time, any contribution keeps development going.</p>
+  <div class="sgrid">
+    <a href="https://www.paypal.com/ncp/payment/XP64LCUR32NYG" target="_blank" class="scard pp r3d-l">
+      <div class="slogo" style="background:rgba(0,112,186,.12)">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="#4ba3e3"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.197 7.543zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.59 3.025-2.566 6.082-8.558 6.082H9.819c-.524 0-.968.382-1.05.9l-1.305 8.27-.361 2.286a.64.64 0 00.633.741h4.084a.641.641 0 00.633-.741l.295-1.868.454-2.88h2.19c4.298 0 7.664-1.747 8.646-6.797.344-1.764.093-3.241-.816-4.452z"/></svg>
       </div>
       <h3>Donate with PayPal</h3>
       <p>Quick and secure. Every dollar goes directly to the project.</p>
-      <span class="s-btn pp-btn">Donate with PayPal</span>
+      <span class="sbtn pp-b">Donate with PayPal</span>
     </a>
-    <a href="https://buymeacoffee.com/toolbarlayout" target="_blank" class="s-card cf">
-      <div class="s-logo" style="background:rgba(255,213,0,.12)">
-        <svg width="36" height="36" viewBox="0 0 884 1279" fill="#FFD500"><path d="M791.109 297.518L790.231 297.002L788.201 296.383C789.018 297.27 789.728 298.233 790.441 299.266L791.109 297.518Z"/><path d="M803.896 388.891L802.916 389.166L803.896 388.891Z"/><path d="M791.484 297.377C791.359 297.285 791.234 297.222 791.109 297.518L791.484 297.377Z"/><path d="M755.577 152.052C753.8 150.63 751.922 149.402 750.06 148.319L755.577 152.052Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M519.771 1C516.236 1 512.889 2.39 510.408 4.88L510.408 4.88L1.47 515.717C-0.993 518.196 -0.278 522.192 2.926 523.761C3.784 524.175 4.716 524.386 5.659 524.386H251.377C254.91 524.386 258.258 522.996 260.74 520.509L519.771 260.001L778.818 520.509C781.3 522.996 784.647 524.386 788.181 524.386H884V1H519.771ZM519.771 259.999L263.624 517.416L264.525 524.386H884V7.97H519.771V259.999Z"/></svg>
+    <a href="https://buymeacoffee.com/toolbarlayout" target="_blank" class="scard cf r3d-r">
+      <div class="slogo" style="background:rgba(255,213,0,.1)">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="#ffd500"><path d="M18.5 3H6c-1.1 0-2 .9-2 2v1h16V5c0-1.1-.9-2-2-2zM4 7v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7H4zm8 9c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
       </div>
       <h3>Buy Me a Coffee</h3>
       <p>A small coffee keeps the extension alive and improving.</p>
-      <span class="s-btn cf-btn">Buy Me a Coffee</span>
+      <span class="sbtn cf-b">Buy Me a Coffee</span>
     </a>
   </div>
-</section>
+</div>
 
 <!-- CONTACT -->
-<section id="contact">
-  <span class="s-label reveal" style="display:block;text-align:center">Contact</span>
-  <h2 class="s-title reveal" style="text-align:center">Get in touch.</h2>
-  <p class="s-sub reveal" style="text-align:center;margin:0 auto">Bug report, feedback, or just saying hi — we read everything.</p>
-  <form id="cForm" class="c-form reveal">
-    <div class="f-row">
-      <div class="f-g">
-        <label for="cn">Name <span style="color:#EF4444">*</span></label>
+<div class="section" id="contact" style="text-align:center">
+  <span class="s-label r3d">Contact</span>
+  <h2 class="s-title r3d">Get in touch.</h2>
+  <p class="s-sub r3d" style="margin:0 auto">Bug report, feature idea, or just saying hi — we read everything.</p>
+  <form id="cForm" class="cform r3d">
+    <div class="frow">
+      <div class="fg">
+        <label for="cn">Name <span style="color:#ef4444">*</span></label>
         <input type="text" id="cn" placeholder="Your name" required autocomplete="name">
       </div>
-      <div class="f-g">
-        <label for="ce">Email <span style="color:#EF4444">*</span></label>
+      <div class="fg">
+        <label for="ce">Email <span style="color:#ef4444">*</span></label>
         <input type="email" id="ce" placeholder="you@example.com" required autocomplete="email">
       </div>
     </div>
-    <div class="f-g">
-      <label for="cm">Message <span style="color:#EF4444">*</span></label>
+    <div class="fg">
+      <label for="cm">Message <span style="color:#ef4444">*</span></label>
       <textarea id="cm" placeholder="Tell us what's on your mind..." required></textarea>
     </div>
-    <button type="submit" class="f-submit">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <button type="submit" class="fsub">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       Send Message
     </button>
-    <p style="text-align:center;font-size:13px;color:var(--dim);margin-top:16px">Or email: <a href="mailto:support@toolbarlayout.com" style="color:var(--accent);text-decoration:none">support@toolbarlayout.com</a></p>
+    <p style="margin-top:16px;font-size:13px;color:var(--muted)">Or email: <a href="mailto:support@toolbarlayout.com" style="color:var(--accent);text-decoration:none">support@toolbarlayout.com</a></p>
   </form>
-</section>
+</div>
 
+<!-- FOOTER -->
 <footer>
-  <div class="f-brand">
+  <div class="fbrand">
     <div class="nav-logo-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg>
     </div>
     Toolbar Layout
   </div>
-  <div class="f-links">
+  <div class="flinks">
     <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank">GitHub</a>
     <a href="https://extensions.sketchup.com/en/content/toolbar-layout" target="_blank">Extension Warehouse</a>
     <a href="mailto:support@toolbarlayout.com">Support</a>
   </div>
-  <p class="f-copy">© 2025 Toolbar Layout. Free for the SketchUp community.</p>
+  <p class="fcopy">© 2025 Toolbar Layout. Free for the SketchUp community.</p>
 </footer>
 
 <script>
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 60);
+/* ─── CURSOR ─── */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx-6+'px';cur.style.top=my-6+'px';
+});
+(function lerpRing(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx-20+'px';ring.style.top=ry-20+'px';
+  requestAnimationFrame(lerpRing);
+})();
+document.querySelectorAll('a,button,.hw-btn,.tb-badge').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cur.style.transform='scale(2)';
+    ring.style.width='60px';ring.style.height='60px';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cur.style.transform='scale(1)';
+    ring.style.width='40px';ring.style.height='40px';
+  });
+});
+
+/* ─── SCROLL PROGRESS ─── */
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  const p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  prog.style.width=p+'%';
+},{ passive:true });
+
+/* ─── 3D SCROLL REVEAL ─── */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),i*55);
       obs.unobserve(e.target);
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+},{threshold:.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.r3d,.r3d-l,.r3d-r').forEach(el=>obs.observe(el));
 
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+/* ─── BENTO CARD 3D TILT ─── */
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const xp=(e.clientX-r.left)/r.width-.5;
+    const yp=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`perspective(800px) rotateX(${-yp*8}deg) rotateY(${xp*8}deg) translateZ(8px)`;
+    card.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');
+    card.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%');
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
   });
 });
 
-document.getElementById('cForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const n = document.getElementById('cn').value;
-  const em = document.getElementById('ce').value;
-  const m = document.getElementById('cm').value;
-  window.location.href = `mailto:support@toolbarlayout.com?subject=${encodeURIComponent('Toolbar Layout — Contact')}&body=${encodeURIComponent(`Name: ${n}\nEmail: ${em}\n\nMessage:\n${m}`)}`;
+/* ─── MAGNETIC BUTTONS ─── */
+document.querySelectorAll('.btn-p,.btn-s,.nav-dl').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.25;
+    const y=(e.clientY-r.top-r.height/2)*.25;
+    btn.style.transform=`translate(${x}px,${y}px) translateY(-2px)`;
+  });
+  btn.addEventListener('mouseleave',()=>{btn.style.transform=''});
 });
+
+/* ─── HERO WINDOW ANIMATION ─── */
+const rows=[document.getElementById('tr1'),document.getElementById('tr2'),document.getElementById('tr3'),document.getElementById('tr4')];
+const stat=document.getElementById('hw-stat');
+let idx=0;
+function animWindow(){
+  rows.forEach(r=>r.classList.remove('active'));
+  if(idx<rows.length){
+    rows[idx].classList.add('active');
+    idx++;
+    setTimeout(animWindow,600);
+  } else {
+    setTimeout(()=>{stat.classList.add('show')},200);
+    setTimeout(()=>{
+      stat.classList.remove('show');
+      rows.forEach(r=>r.classList.remove('active'));
+      idx=0;
+      setTimeout(animWindow,1200);
+    },2800);
+  }
+}
+setTimeout(animWindow,1400);
+
+/* ─── CONTACT FORM ─── */
+document.getElementById('cForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=document.getElementById('cn').value;
+  const em=document.getElementById('ce').value;
+  const m=document.getElementById('cm').value;
+  window.location.href=`mailto:support@toolbarlayout.com?subject=${encodeURIComponent('Toolbar Layout — Contact')}&body=${encodeURIComponent(`Name: ${n}\nEmail: ${em}\n\nMessage:\n${m}`)}`;
+});
+
+/* ─── PARALLAX AURORA ─── */
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.querySelector('.ab1').style.transform=`translate(0,${y*.04}px) scale(1)`;
+  document.querySelector('.ab2').style.transform=`translate(0,${-y*.03}px) scale(1)`;
+},{passive:true});
 </script>
 </body>
 </html>
