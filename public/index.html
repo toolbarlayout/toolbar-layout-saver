@@ -29,7 +29,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overf
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(15,23,42,.85);border-bottom:1px solid rgba(51,65,85,.5)}
+/* TOP DONATE BAR */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:1001;background:rgba(15,23,42,.95);border-bottom:1px solid rgba(51,65,85,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:8px 24px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.top-bar-text{font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap}
+.top-bar-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
+.top-bar-btn.pp{background:rgba(0,112,186,.15);color:#4BA3E3;border:1px solid rgba(0,112,186,.3)}
+.top-bar-btn.pp:hover{background:rgba(0,112,186,.25);border-color:rgba(0,112,186,.5);transform:translateY(-1px)}
+.top-bar-btn.cf{background:rgba(255,213,0,.1);color:#FFD500;border:1px solid rgba(255,213,0,.3)}
+.top-bar-btn.cf:hover{background:rgba(255,213,0,.2);border-color:rgba(255,213,0,.5);transform:translateY(-1px)}
+nav{position:fixed;top:37px;left:0;right:0;z-index:1000;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(15,23,42,.85);border-bottom:1px solid rgba(51,65,85,.5)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
 .nav-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#16A34A);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-logo-text{font-size:15px;font-weight:600;letter-spacing:-.3px}
@@ -40,7 +48,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 40px;display:f
 .nav-cta:hover{background:#16A34A!important;box-shadow:0 4px 20px rgba(34,197,94,.4)!important;transform:translateY(-1px)}
 
 /* HERO */
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;overflow:hidden}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:157px 24px 80px;overflow:hidden}
 .hero-glow{position:absolute;top:15%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(34,197,94,.1) 0%,transparent 70%);pointer-events:none}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid rgba(34,197,94,.3);border-radius:100px;background:rgba(34,197,94,.06);font-size:13px;font-weight:500;color:var(--accent);margin-bottom:32px;animation:fadeUp .6s ease both}
 .badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
@@ -186,6 +194,17 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
 </head>
 <body>
 
+<div class="top-bar">
+  <span class="top-bar-text">❤️ If Toolbar Layout saves you time —</span>
+  <a href="https://www.paypal.com/ncp/payment/XP64LCUR32NYG" target="_blank" class="top-bar-btn pp">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.197 7.543zm14.146-14.42a3.35 3.35 0 00-.607-.541c-.59 3.025-2.566 6.082-8.558 6.082H9.819c-.524 0-.968.382-1.05.9l-1.305 8.27-.361 2.286a.64.64 0 00.633.741h4.084a.641.641 0 00.633-.741l.295-1.868.454-2.88h2.19c4.298 0 7.664-1.747 8.646-6.797.344-1.764.093-3.241-.816-4.452z"/></svg>
+    Donate via PayPal
+  </a>
+  <a href="https://buymeacoffee.com/toolbarlayout" target="_blank" class="top-bar-btn cf">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.864-.109-.37-.531-.552-.888-.462-.302.079-.612.141-.917.195a12.64 12.64 0 01-1.144.117c-.867.063-1.737.065-2.606.019l-.947-.049c-.447-.023-.862-.065-1.311-.105l-.324-.031c-.2-.023-.4-.047-.605-.096-.109-.026-.381-.094-.38-.224.001-.104.228-.157.33-.192.27-.095.55-.164.833-.217l.921-.167c.924-.16 1.859-.247 2.797-.3 1.056-.06 2.114-.073 3.17-.024.386.018.773.053 1.157.104.228.03.622.095.651.369.031.284-.328.338-.549.403-.228.067-.467.12-.698.163l-.144.028a1.2 1.2 0 00-.274.089c-.316.148-.473.514-.362.848.109.329.47.499.8.427 1.317-.31 2.65-.543 3.991-.64.913-.064 1.824-.05 2.738.05zM12 14c.756 0 1.453.26 2 .693V20H10v-5.307C10.547 14.26 11.244 14 12 14zm7 6H5v-2l.002-.002c.127-.055.216-.182.216-.33V16h13.364v1.297c0 .148.09.275.217.33L19 17.663V20z"/></svg>
+    Buy Me a Coffee
+  </a>
+</div>
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-icon">
