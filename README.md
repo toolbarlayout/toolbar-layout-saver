@@ -1,20 +1,25 @@
 # Toolbar Layout Saver
 
-Extension SketchUp pour sauvegarder et restaurer les dispositions de toolbars.
+SketchUp extension to save and restore toolbar layouts.
+
+## Important
+
+**You must quit SketchUp via File > Exit SketchUp for the layout to be saved properly.**
+**It must be the last running instance of SketchUp.**
 
 ## Installation
 
-1. Copier `toolbarLayoutSaver.rb` dans le dossier Plugins de SketchUp
-2. Redémarrer SketchUp
+1. Copy `toolbarLayoutSaver.rb` into SketchUp's Plugins folder
+2. Restart SketchUp
 
-## Utilisation
+## Usage
 
 ### Menu
 ```
-View → Toolbar Layout
-  ├── Sauvegarder la disposition
-  └── Restaurer la disposition
-``
+View -> Toolbar Layout
+  |- Save Layout
+  `- Restore Layout
+```
 
 ## Version
 
