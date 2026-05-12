@@ -58,8 +58,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* NAV */
 nav{position:fixed;top:33px;left:0;right:0;z-index:1000;padding:16px 56px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);background:rgba(7,7,15,.75);border-bottom:1px solid var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
-.nav-logo img{height:38px;width:auto;display:block;background:#fff;border-radius:10px;padding:5px 12px}
+.nav-logo{display:flex;align-items:center;text-decoration:none;color:var(--text)}
 .nav-links{display:flex;align-items:center;gap:24px;list-style:none}
 .nav-links a{color:var(--muted2);text-decoration:none;font-size:14px;font-weight:500;transition:color .15s}
 .nav-links a:hover{color:var(--text)}
@@ -248,7 +247,30 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:36
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <img src="./toolbar.png" alt="Toolbar Layout">
+    <svg width="158" height="36" viewBox="0 0 158 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nlg" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+        </linearGradient>
+        <linearGradient id="nlg2" x1="0" y1="0" x2="0" y2="36" gradientUnits="userSpaceOnUse">
+          <stop stop-color="rgba(255,255,255,0.12)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+      </defs>
+      <!-- Icon box -->
+      <rect width="36" height="36" rx="10" fill="url(#nlg)"/>
+      <rect width="36" height="18" rx="10" fill="url(#nlg2)"/>
+      <!-- Toolbar top bar -->
+      <rect x="6" y="8" width="24" height="5" rx="2.5" fill="white"/>
+      <!-- Tool buttons -->
+      <rect x="6" y="16" width="7" height="6" rx="2" fill="white" opacity="0.85"/>
+      <rect x="15" y="16" width="7" height="6" rx="2" fill="white" opacity="0.6"/>
+      <rect x="24" y="16" width="6" height="6" rx="2" fill="white" opacity="0.4"/>
+      <!-- Bottom separator -->
+      <rect x="6" y="25" width="24" height="2.5" rx="1.25" fill="white" opacity="0.2"/>
+      <!-- Text -->
+      <text x="46" y="16" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="13.5" fill="white" letter-spacing="-0.4">Toolbar</text>
+      <text x="46.5" y="30" font-family="Inter,system-ui,sans-serif" font-weight="500" font-size="10.5" fill="#a78bfa" letter-spacing="2.8">LAYOUT</text>
+    </svg>
   </a>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
@@ -424,7 +446,25 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:36
 
 <footer>
   <div class="fbrand">
-    <img src="./toolbar.png" alt="Toolbar Layout" style="height:34px;width:auto;display:block;background:#fff;border-radius:8px;padding:4px 10px">
+    <svg width="136" height="30" viewBox="0 0 136 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="flg" x1="0" y1="0" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+        </linearGradient>
+        <linearGradient id="flg2" x1="0" y1="0" x2="0" y2="15" gradientUnits="userSpaceOnUse">
+          <stop stop-color="rgba(255,255,255,0.12)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+      </defs>
+      <rect width="30" height="30" rx="8" fill="url(#flg)"/>
+      <rect width="30" height="15" rx="8" fill="url(#flg2)"/>
+      <rect x="5" y="7" width="20" height="4" rx="2" fill="white"/>
+      <rect x="5" y="13" width="6" height="5" rx="1.5" fill="white" opacity="0.85"/>
+      <rect x="12.5" y="13" width="6" height="5" rx="1.5" fill="white" opacity="0.6"/>
+      <rect x="20" y="13" width="5" height="5" rx="1.5" fill="white" opacity="0.4"/>
+      <rect x="5" y="21" width="20" height="2" rx="1" fill="white" opacity="0.2"/>
+      <text x="39" y="13.5" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="11.5" fill="white" letter-spacing="-0.3">Toolbar</text>
+      <text x="39.5" y="25" font-family="Inter,system-ui,sans-serif" font-weight="500" font-size="9" fill="#a78bfa" letter-spacing="2.5">LAYOUT</text>
+    </svg>
   </div>
   <div class="flinks">
     <a href="https://github.com/toolbarlayout/toolbar-layout-saver/" target="_blank">GitHub</a>
